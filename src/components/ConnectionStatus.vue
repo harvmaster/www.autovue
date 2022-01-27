@@ -3,7 +3,6 @@
     <svg class="circle-outer" viewBox="0 0 86 86">
       <circle class="back" cx="43" cy="43" r="40"></circle>
       <circle :class="rssi > -50 ? 'active' : 'inactive'" cx="43" cy="43" r="40"></circle>
-      <!-- <circle class="new" cx="43" cy="43" r="40"></circle> -->
     </svg>
     <svg class="circle-middle" viewBox="0 0 60 60">
       <circle class="back" cx="30" cy="30" r="27"></circle>
@@ -18,23 +17,18 @@
 
 <style lang="scss" scoped>
 .connection-color {
+  // stroke: #00ff7b;  
+  transition: stroke 0.2s linear;
   &.good {
     stroke: #00ff7b;
-    animation: good-enter 0.5s ease;
   }
   &.medium {
     stroke: #f9eb2f;
-    animation: medium-enter 0.5s ease;
   }
   &.bad {
     stroke: #f75050;
-    animation: medium-leave 0.5s ease;
   }
 }
-@keyframes good-enter { 0% { stroke: #f9eb2f } 100% { stroke: #00ff7b } }
-@keyframes good-leave { 0% { stroke: #00ff7b } 100% { stroke: #f9eb2f} }
-@keyframes medium-enter { 0% { stroke: #f75050 } 100% { stroke: #f9eb2f }}
-@keyframes medium-leave { 0% { stroke: #f9eb2f } 100% { stroke: #f75050 } }
 #wifi-loader {
   --background: #62ABFF;
   --front-color: #4F29F0; 
@@ -60,7 +54,6 @@
       stroke-linejoin: round;
       transform: rotate(-100deg);
       transform-origin: center;
-      // stroke: var(--front-color);
       &.back {
         stroke: var(--back-color);
       }
@@ -145,7 +138,6 @@
     r: 27;
   }
 }
-
 @keyframes middle-enter {
   0% {
     stroke-dasharray: 15 155;
@@ -172,7 +164,6 @@
     r: 14;
   }
 }
-
 @keyframes inner-enter {
   0% {
     r: 0;
@@ -191,42 +182,6 @@
   100% {
     stroke-dasharray: 22 66;
     r: 0;
-  }
-}
-
-@keyframes circle-middle {
-  0% {
-    stroke-dashoffset: 17;
-  }
-  25% {
-    stroke-dashoffset: 0;
-  }
-  65% {
-    stroke-dashoffset: 204;
-  }
-  80% {
-    stroke-dashoffset: 187;
-  }
-  100% {
-    stroke-dashoffset: 187;
-  }
-}
-
-@keyframes circle-inner {
-  0% {
-    stroke-dashoffset: 9;
-  }
-  25% {
-    stroke-dashoffset: 0;
-  }
-  65% {
-    stroke-dashoffset: 106;
-  }
-  80% {
-    stroke-dashoffset: 97;
-  }
-  100% {
-    stroke-dashoffset: 97;
   }
 }
 </style>

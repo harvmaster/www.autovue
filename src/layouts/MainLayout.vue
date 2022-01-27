@@ -1,116 +1,73 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+  <q-layout view="lHr lpR lFr">
 
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
+    <q-drawer class="" v-model="drawersState" side="left" bordered mini persistent dark>
+      <div class="row justify-center items-center fit">
+        <div class="col-12">
+          <q-btn class="my-button q-my-lg col-12" @click="changeScreen('left', 'player')" icon="music_note" flat round :color="drawers.right.active === 'music' ? 'primary' : 'grey'" />
+          <q-btn class="my-button q-my-lg col-12" @click="changeScreen('left', 'browse')" icon="library_music" flat round :color="drawers.right.active === 'lyrics' ? 'primary' : 'grey'" />
+          <q-btn class="my-button q-my-lg col-12" @click="changeScreen('left', 'lyrics')" icon="subtitles" flat round :color="drawers.right.active === 'browse' ? 'primary' : 'grey'" />
+          <q-btn class="my-button q-my-lg col-12" @click="changeScreen('left', 'bluetooth')" icon="bluetooth" flat round :color="drawers.right.active === 'bluetooth' ? 'primary' : 'grey'"/>
+        </div>
+      </div>
+    </q-drawer>
 
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
+    <q-drawer class="" v-model="drawersState" side="right" bordered mini persistent dark>
+      <div class="row justify-center items-center fit">
+        <div class="col-12">
+          <q-btn class="my-button q-my-lg col-12" @click="changeScreen('right', 'player')" icon="music_note" flat round :color="drawers.left.active === 'music' ? 'primary' : 'grey'" />
+          <q-btn class="my-button q-my-lg col-12" @click="changeScreen('right', 'browse')" icon="library_music" flat round :color="drawers.left.active === 'lyrics' ? 'primary' : 'grey'" />
+          <q-btn class="my-button q-my-lg col-12" @click="changeScreen('right', 'lyrics')" icon="subtitles" flat round :color="drawers.left.active === 'browse' ? 'primary' : 'grey'" />
+          <q-btn class="my-button q-my-lg col-12" @click="changeScreen('right', 'bluetooth')" icon="bluetooth" flat round :color="drawers.left.active === 'bluetooth' ? 'primary' : 'grey'"/>
+        </div>
+      </div>
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view ref="myRoute" />
     </q-page-container>
+
+
+      <!-- Choice for instead of subtitles. Looks liek karaoke but also feels a little cluttered -->
+      <!-- <q-btn class="my-button q-my-lg col-12" icon="mic_external_on" flat round /> -->
+
   </q-layout>
 </template>
 
+<style scoped>
+.my-drawer {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.my-button {
+  aspect-ratio: 1;
+  width: 100%;
+}
+</style>
+
 <script>
-import EssentialLink from 'components/EssentialLink.vue'
+// import EssentialLink from 'components/EssentialLink.vue'
 
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-];
-
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'MainLayout',
-
-  components: {
-    EssentialLink
-  },
-
-  setup () {
-    const leftDrawerOpen = ref(false)
-
-    return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
+  data () {
+    return { 
+      drawersState: true,
+      drawers: {
+        left: {
+          active: 'bluetooth'
+        },
+        right: {
+          active: 'bluetooth'
+        }
       }
+    }
+  },
+  methods: {
+    changeScreen: function (side, value) {
+      this.$store.commit('route/setScreen', { [side]: value })
     }
   }
 })
