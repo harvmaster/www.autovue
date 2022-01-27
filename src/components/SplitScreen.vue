@@ -1,8 +1,10 @@
 <template>
   <div class="col-12 row">
-    <div class="fit container">
-      <split-child ref="a-side" :left="screens.left" :right="screens.right" :showing="" name="a" />
-      <split-child ref="b-side" :left="screens.left" :right="screens.right" :showing="" name="b" />
+    <div class="fit container bg-grey-10">
+      <split-child ref="a-side" :left="screens.left" :right="screens.right" name="bluetooth" />
+      <split-child ref="b-side" :left="screens.left" :right="screens.right" name="player" />
+      <split-child ref="c-side" :left="screens.left" :right="screens.right" name="lyrics" />
+
     </div>
   </div>
 </template>
@@ -31,8 +33,9 @@ export default defineComponent({
       // console.log(this.$store.getters['route/getScreens'])
       return this.$store.getters['route/getScreens'].splitscreen;
     },
+    // Could be used in future if components is reduced to only 2 that rotate the insides
     showing: function () {
-
+      return ''
     }
   },
   methods: {

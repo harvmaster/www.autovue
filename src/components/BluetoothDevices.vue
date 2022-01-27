@@ -1,5 +1,5 @@
 <template>
-  <div class="hideable" dark>
+  <div class="hideable bg-grey-9">
     <div class="row q-pa-md">
       <bluetooth-device v-for="device in displayableDevices" :device="device" :key="device.address" />
     </div>

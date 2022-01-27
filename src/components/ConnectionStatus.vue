@@ -30,9 +30,9 @@
   }
 }
 #wifi-loader {
-  --background: #62ABFF;
+  --background: #b6d7fc;
   --front-color: #4F29F0; 
-  --back-color: #C3C8DE;
+  --back-color: #ffffff;
   --text-color: #414856; 
   width: 64px;
   height: 64px;

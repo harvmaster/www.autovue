@@ -1,19 +1,12 @@
 <template>
   <q-page class="flex flex-center items-stretch row">
       <split-screen ref="splitscreen" class="col-12"/>
-
-    <!-- <div class="fit row q-pa-sm items-stretch fit"> -->
-      <!-- <q-btn class="col-2" @click="testRssi" />
-      <bluetooth-device v-for="device in displayableDevices" :device="device" :key="device.address" /> -->
-      <!-- <split-screen class="col"/>
-    </div> -->
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
 import Socket from '../services/socketio'
-// import BluetoothDevice from '../components/BluetoothDevice.vue'
 import SplitScreen from '../components/SplitScreen.vue'
 
 export default defineComponent({
