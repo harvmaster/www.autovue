@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center items-stretch row">
-      <split-screen ref="splitscreen" class="col-12"/>
+    <split-screen ref="splitscreen" class="col-12"/>
   </q-page>
 </template>
 
@@ -23,7 +23,7 @@ export default defineComponent({
   computed: {
     displayableDevices: function () {
       const devices = {}
-      console.log(this.bluetoothDevices)
+      // console.log(this.bluetoothDevices)
       Object.keys(this.bluetoothDevices).forEach(address => {
         const device = this.bluetoothDevices[address]
         console.log(device)

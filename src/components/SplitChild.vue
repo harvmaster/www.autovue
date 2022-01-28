@@ -63,7 +63,7 @@ export default defineComponent({
         'splitscreen',
         // `bg-${this.$props.color}`
       ]
-      console.log(this.$refs)
+      // console.log(this.$refs)
       if (this.$props.left == this.$props.name && this.$props.right == this.$props.name) {
         list.push('fullscreen-display')
         if (this.$refs.child?.$el.className.split(' ').every(c => c != 'left')) list.push('right')

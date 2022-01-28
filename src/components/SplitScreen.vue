@@ -4,7 +4,6 @@
       <split-child ref="a-side" :left="screens.left" :right="screens.right" name="bluetooth" />
       <split-child ref="b-side" :left="screens.left" :right="screens.right" name="player" />
       <split-child ref="c-side" :left="screens.left" :right="screens.right" name="lyrics" />
-
     </div>
   </div>
 </template>

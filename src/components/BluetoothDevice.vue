@@ -16,12 +16,15 @@
   </div>
 </template>
 
-<style scoped>
+<style lang="scss">
 .bluetooth-card {
   position: relative;
   height: 10em;
   width: 10em;
   border-radius: 0.5em;
+}
+.bluetooth-card:hover {
+  background-color: #8c8c8c !important;
 }
 
 </style>
