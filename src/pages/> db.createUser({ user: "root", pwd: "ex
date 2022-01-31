@@ -1,0 +1,2 @@
+> db.createUser({ user: "root", pwd: "example", roles: [ { role: "userAdminAnyDatabase", db: "admin" } ] })
+db.createUser({ user: "cardash", pwd: "cardash", roles: [{ role: "dbOwner", db: "cardash" }] })

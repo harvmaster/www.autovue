@@ -203,7 +203,8 @@ export default defineComponent({
       if (this.$props.rssi > -70) return 'medium'
       if (this.$props.rssi > -100) return 'bad'
       return 'bad'
-    }
+    },
+    
   },
   props: {
     rssi: {

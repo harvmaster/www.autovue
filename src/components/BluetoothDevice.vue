@@ -2,7 +2,8 @@
   <div class='bluetooth-card q-ma-sm shadow-3 q-pa-sm bg-grey-14 text-white' @click="connect" v-touch-hold.mouse="disconnect">
     <div class="fit column justify-between">
       <div class="col row items-center">
-        <connection-status class="col" :color="'red-5'" :rssi="device.rssi" />
+        <trusted-icons v-if="device.trusted" :device="device" />
+        <connection-status v-else class="col" :color="'red-5'" :rssi="device.rssi" />
       </div>
       <div class="col-auto row">
         <div class="col">
@@ -32,6 +33,7 @@
 <script>
 import { defineComponent } from 'vue'
 import ConnectionStatus from './ConnectionStatus.vue'
+import TrustedIcons from './TrustedIcons.vue'
 
 export default defineComponent({
   name: 'BluetoothDevice',
@@ -41,7 +43,8 @@ export default defineComponent({
     }
   },
   components: {
-    ConnectionStatus
+    ConnectionStatus,
+    TrustedIcons
   },
   computed: {
     deviceIcon: function () {
