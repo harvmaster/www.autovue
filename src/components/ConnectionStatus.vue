@@ -36,6 +36,7 @@
   --text-color: #414856; 
   width: 64px;
   height: 64px;
+  transform: translateY(1em);
   border-radius: 50px;
   position: relative;
   display: flex;

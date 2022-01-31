@@ -1,5 +1,5 @@
 <template>
-  <div class='bluetooth-card q-ma-sm shadow-3 q-pa-sm bg-grey-14 text-white' >
+  <div class='bluetooth-card q-ma-sm shadow-3 q-pa-sm bg-grey-14 text-white' @click="connect" v-touch-hold.mouse="disconnect">
     <div class="fit column justify-between">
       <div class="col row items-center">
         <connection-status class="col" :color="'red-5'" :rssi="device.rssi" />
@@ -54,7 +54,12 @@ export default defineComponent({
     }
   },
   methods: {
-
+    connect: function () {
+      this.$emit('connect', this.$props.device.address)
+    },
+    disconnect: function () {
+      this.$emit('disconnect', this.$props.device.address)
+    }
   },
   created: () => {
 

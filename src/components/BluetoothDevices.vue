@@ -2,7 +2,7 @@
   <div class="hideable bg-grey-9">
     <div class="row q-pa-md">
       <p class="col-12 text-grey-13 no-margin-y">Click device to connect / pair (hold for more)</p>
-      <bluetooth-device v-for="device in displayableDevices" :device="device" :key="device.address" />
+      <bluetooth-device v-for="device in displayableDevices" :device="device" :key="device.address" @connect="connectToDevice" @disconnect="disconnectFromDevice"/>
     </div>
   </div>
 </template>
@@ -20,6 +20,7 @@
 <script>
 import { defineComponent } from 'vue'
 import BluetoothDevice from './BluetoothDevice.vue'
+import Socket from '../services/socketio'
 
 export default defineComponent({
   name: 'BluetoothDevices',
@@ -44,8 +45,18 @@ export default defineComponent({
     }
   },
   methods: {
+    connectToDevice: function (address) {
+      console.log('connecting to ', address)
+      Socket.sendEvent('bt-connect', {address: address})
+    },
+    disconnectFromDevice: function (address) {
+      console.log('disconnecting from ', address)
+      Socket.sendEvent('bt-disconnect', {address: address})
+    }
   },
   created () {
+    Socket.sendEvent('bt-refresh')
+
     Socket.addEventListener({
       type: 'bt-devices',
       callback: (msg) => {
@@ -60,6 +71,7 @@ export default defineComponent({
     Socket.addEventListener({
       type: 'bt-deviceFound',
       callback: (msg) => {
+        console.log(msg)
         const address = Object.keys(msg)[0]
         this.bluetoothDevices = { ...this.bluetoothDevices, ...msg }
         Socket.sendEvent('subscribe', address)
@@ -69,6 +81,7 @@ export default defineComponent({
     Socket.addEventListener({
       type: 'bt-deviceLost',
       callback: (msg) => {
+        console.log(msg)
         delete this.bluetoothDevices[msg]
         Socket.sendEvent('unsubscribe', msg)
       }
@@ -77,6 +90,16 @@ export default defineComponent({
     Socket.addEventListener({
       type: 'bt-deviceUpdate',
       callback: (msg) => {
+        console.log(msg)
+        this.bluetoothDevices = { ...this.bluetoothDevices, ...msg }
+      }
+    })
+
+    Socket.addEventListener({
+      type: 'bt-disconnected',
+      callback: (msg) => {
+        console.log(msg)
+        const address = Object.keys(msg)[0]
         this.bluetoothDevices = { ...this.bluetoothDevices, ...msg }
       }
     })
