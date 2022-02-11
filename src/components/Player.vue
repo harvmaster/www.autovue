@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="col-12" >
-        <q-slider v-model="player.position" :min="0" :max="player.length" label :marker-labels="[{ value: 0, label: '0' }, { value: player.length, label: player.length }]" />
+        <q-slider v-model="player.position" :min="0" :max="player.duration" label :marker-labels="[{ value: 0, label: '0' }, { value: player.duration, label: player.duration }]" />
       </div>
       <div class="col-12 row justify-evenly">
         <div class="row justify-evenly max-width-45 col">
@@ -45,6 +45,7 @@
 
 <script>
 import { defineComponent } from 'vue'
+import Socket from '../services/socketio'
 
 export default defineComponent({
   name: 'Player',
@@ -56,7 +57,7 @@ export default defineComponent({
         title: 'Smells Like Teen Spirit',
         image: 'https://upload.wikimedia.org/wikipedia/en/b/b7/NirvanaNevermindalbumcover.jpg',
         position: 54,
-        length: 128,
+        duration: 128,
         album: 'nevermind',
         artist: 'Nirvana'
       }
@@ -67,7 +68,13 @@ export default defineComponent({
   methods: {
   },
   created () {
-
+    Socket.addEventListener({
+      type: 'media-update',
+      callback: (msg) => {
+        console.log(msg)
+        this.player = msg.properties.track
+      }
+    })
   }
 })
 </script>
