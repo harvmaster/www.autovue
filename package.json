@@ -13,8 +13,10 @@
     "@quasar/extras": "^1.0.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "qr-code-styling": "^1.6.0-rc.1",
     "quasar": "^2.0.0",
     "socket.io-client": "^4.4.1",
+    "url": "^0.11.0",
     "vuex": "^4.0.1"
   },
   "devDependencies": {

@@ -2,6 +2,7 @@ import { store } from 'quasar/wrappers'
 import { createStore } from 'vuex'
 
 import route from './route'
+import bluetooth from './bluetooth'
 
 /*
  * If not building with SSR mode, you can
@@ -15,7 +16,8 @@ import route from './route'
 export default store(function (/* { ssrContext } */) {
   const Store = createStore({
     modules: {
-      route
+      route,
+      bluetooth
     },
 
     // enable strict mode (adds overhead!)

@@ -2,7 +2,7 @@
   <div class='bluetooth-card q-ma-sm shadow-3 q-pa-sm bg-grey-14 text-white' @click="connect" v-touch-hold.mouse="disconnect">
     <div class="fit column justify-between">
       <div class="col row items-center">
-        <trusted-icons v-if="device.trusted" :device="device" />
+        <trusted-icons v-if="device.paired" :device="device" />
         <connection-status v-else class="col" :color="'red-5'" :rssi="device.rssi" />
       </div>
       <div class="col-auto row">
