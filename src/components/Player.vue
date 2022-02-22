@@ -64,11 +64,11 @@ export default defineComponent({
       return this.$store.getters['bluetooth/getPlayer'];
     },
     imageUrl: function () {
-      const track = this.player.track || { title: '', artist: '' }
+      const track = this.player.track || { album: '', artist: '' }
       const albumurl = url.format({
         pathname:"http://raspberrypi.local:3000/spotify/albumcover",
         query: {
-           "track": track.title,
+           "album": track.album,
            "artist": track.artist
          }
       })
