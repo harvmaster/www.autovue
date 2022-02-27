@@ -1,7 +1,7 @@
 <template>
   <div class="hideable bg-grey-9 text-white">
     <div class="row justify-center q-pa-xl">
-      
+      <q-btn label="getMySongs" @click="getMySongs" />
     </div>
   </div>
 </template>
@@ -20,6 +20,7 @@
 
 <script>
 import { defineComponent } from 'vue'
+import axios from 'axios'
 
 export default defineComponent({
   name: 'Lyrics',
@@ -40,7 +41,12 @@ export default defineComponent({
   computed: {
   },
   methods: {
-    
+    getMySongs: async function () {
+      const id = this.$store.state.bluetooth.device.spotifyId
+
+      const res = await axios.get('http://raspberrypi.local:3000/spotify/saved/covers')
+      console.log(res.data)
+    }
   },
   created () {
 

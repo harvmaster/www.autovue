@@ -77,7 +77,7 @@ export default defineComponent({
     // Setter and getter allow me to use a computed variable for a v-model
     showQR: {
       get () {
-        return (this.hasSpotifyId && this.qrCode)
+        return (this.hasSpotifyId && this.qrCode) || this.qrCode
       },
       set (val) {
         this.qrCode = val
