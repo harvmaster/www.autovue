@@ -12,7 +12,7 @@
     <q-dialog class="" full-width v-model="showQR">
       <div class="qr-dialog row justify-center pointer-cursor" @click="qrCode = false">
         <div class="row justify-center qr-dialog q-pa-md">
-          <qr-code-vue class="q-ma-lg bg-white" value="http://spotify.mc.hzuccon.com/users/authenticate" :size="600" />
+          <qr-code-vue keep-alive class="q-ma-lg bg-white" value="https://spotify.mc.hzuccon.com/users/authenticate" :size="600" />
         </div>
       </div>
     </q-dialog>

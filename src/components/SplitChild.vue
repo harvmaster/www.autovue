@@ -40,13 +40,15 @@ import { defineComponent } from 'vue'
 import bluetooth from './BluetoothDevices.vue'
 import player from './Player.vue'
 import lyrics from './Lyrics.vue'
+import debug from './Debug.vue'
 
 export default defineComponent({
   name: 'SplitChild',
   components: { 
     bluetooth,
     player,
-    lyrics
+    lyrics,
+    debug
   },
   data () {
     return { 

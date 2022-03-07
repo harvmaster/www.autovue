@@ -1,7 +1,7 @@
 <template>
   <div class="hideable bg-grey-9 text-white">
     <div class="row justify-center q-pa-xl">
-      <q-btn label="getMySongs" @click="getMySongs" />
+      <h6>{{ currentLyric }}</h6>
     </div>
   </div>
 </template>
@@ -28,28 +28,40 @@ export default defineComponent({
   },
   data () {
     return { 
-      player: {
-        title: 'Smells Like Teen Spirit',
-        image: 'https://upload.wikimedia.org/wikipedia/en/b/b7/NirvanaNevermindalbumcover.jpg',
-        position: 54,
-        length: 128,
-        album: 'nevermind',
-        artist: 'Nirvana'
-      }
+      timeNow: Date.now(),
+      lyrics: [
+        
+      ]
     }
   },
   computed: {
-  },
-  methods: {
-    getMySongs: async function () {
-      const id = this.$store.state.bluetooth.device.spotifyId
+    player: function () {
+      this.updateLyrics()
+      return this.$store.getters['bluetooth/getPlayer'];
+    },
+    position: function () {
+      const { position, lastUpdate } = this.player
+      const pos = this.player.state == 'active' ? position + (this.timeNow - lastUpdate) : position
 
-      const res = await axios.get('http://raspberrypi.local:3000/spotify/saved/covers')
-      console.log(res.data)
+      return pos || 0
+    },
+    currentLyric: function () {
+      const lyrics = this.lyrics
+      const toShow = lyrics.filter(lyric => lyrics.timestamp > this.position)
+      return toShow[0].value
+    }
+  },
+
+  methods: {
+    updateLyrics: async function () {
+      const res = await axios.get('http://raspberry.local:3000/music/lyrics', { params: { title: player.track.title, artist: player.track.artist } })
+      this.lyrics = res.data
     }
   },
   created () {
-
+    setInterval(() => {
+      this.timeNow = Date.now()
+    }, 500)
   }
 })
 </script>

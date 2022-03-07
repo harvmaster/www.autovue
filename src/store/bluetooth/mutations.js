@@ -5,5 +5,7 @@ export function setDevice (state, payload) {
 }
 
 export function updatePlayer (state, payload) {
-  state.player = { ...state.player, ...payload.player }
+  const positionUpdate = state.player.position != payload.player.position
+  const lastUpdate = positionUpdate ? Date.now() : state.player.lastUpdate
+  state.player = { ...state.player, ...payload.player, ...{ lastUpdate } }
 }

@@ -5,3 +5,7 @@ export function getPlayer (state) {
 export function getTrack (state) {
   return state.player.track
 }
+
+export function getDevice (state) {
+  return state.device
+}

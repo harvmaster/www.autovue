@@ -2,7 +2,7 @@
   <div class="hideable bg-grey-9 text-white">
     <div class="row justify-center q-pa-xl">
       <div class="col-auto">
-        <q-img class="track-image shadow-10" :src="imageUrl" v-touch-hold.mouse="refreshImage"/>
+        <q-img class="track-image shadow-10" :src="imageUrl" placeholder-src="/placeholder.png" v-touch-hold.mouse="refreshImage"/>
       </div>
       <div class="col-12 q-pa-sm row justify-center">
         <div class=" max-width-30 col-auto">
@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="col-12" >
-        <q-slider v-model="player.position" :min="0" :max="player.duration" label :marker-labels="[{ value: 0, label: '0' }, { value: player.duration, label: player.duration }]" />
+        <q-slider v-model="position" :min="0" :max="player.track?.duration || 2000" label :label-value="formatMS(position)" :marker-labels="[{ value: 0, label: formatMS(position)}, { value: player.track?.duration || 2000, label: formatMS(player.track?.duration)}]" />
       </div>
       <div class="col-12 row justify-evenly">
         <div class="row justify-evenly max-width-45 col">
@@ -56,10 +56,17 @@ export default defineComponent({
   },
   data () {
     return { 
-      updateImageUrl: false
+      updateImageUrl: false,
+      timeNow: Date.now()
     }
   },
   computed: {
+    position: function () {
+      const { position, lastUpdate } = this.player
+      const pos = this.player.state == 'active' ? position + (this.timeNow - lastUpdate) : position
+
+      return pos || 0
+    },
     player: function () {
       // console.log(this.$store.getters['route/getScreens'])
       return this.$store.getters['bluetooth/getPlayer'];
@@ -88,9 +95,17 @@ export default defineComponent({
       const track = this.player.track || { album: '', artist: '' }
       const res = await axios.get('http://raspberrypi.local:3000/spotify/album/cover/refresh', { params: {album: track.album, artist: track.artist} })
       this.updateImageUrl = !this.updateImageUrl
+    },
+    formatMS: function (millis) {
+      var minutes = Math.floor(millis / 60000);
+      var seconds = ((millis % 60000) / 1000).toFixed(0);
+      return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
     }
   },
   created () {
+    setInterval(() => {
+      this.timeNow = Date.now()
+    }, 500)
     Socket.addEventListener({
       type: 'media-update',
       callback: (msg) => {
