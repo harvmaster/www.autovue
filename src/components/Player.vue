@@ -2,7 +2,8 @@
   <div class="hideable bg-grey-9 text-white">
     <div class="row justify-center q-pa-xl">
       <div class="col-auto">
-        <q-img class="track-image shadow-10" :src="imageUrl" placeholder-src="/placeholder.png" v-touch-hold.mouse="refreshImage"/>
+        <!-- <q-img class="track-image shadow-10" :src="imageUrl" placeholder-src="/placeholder.png" v-touch-hold.mouse="refreshImage"/> -->
+        <album-art />
       </div>
       <div class="col-12 q-pa-sm row justify-center">
         <div class=" max-width-30 col-auto">
@@ -50,9 +51,12 @@ import Socket from '../services/socketio'
 import url from 'url'
 import axios from 'axios'
 
+import albumArt from './player/AlbumArt.vue'
+
 export default defineComponent({
   name: 'Player',
   components: {
+    albumArt
   },
   data () {
     return { 
