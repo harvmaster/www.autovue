@@ -73,8 +73,12 @@ export default defineComponent({
            "artist": track.artist
          }
       })
-      this.getAlbumArt(albumurl)
       return albumurl
+    }
+  },
+  watch: {
+    imageUrl: function (val) {
+      this.getAlbumArt(val)
     }
   },
   methods: {
