@@ -1,9 +1,7 @@
 <template>
-  <div class="hideable bg-grey-9 text-white">
-    <q-img v-if="image" class="track-image shadow-10" :src="imageUrl" v-touch-hold.mouse="" />
-    <div v-else class="track-image placeholder-image shadow-10">
-      <q-icon class="placeholder-icon fit" name="music_note" />
-    </div>
+  <div class="track-image placeholder-image shadow-10">
+    <q-img v-if="image" class="track-image shadow-10" :src="imageUrl" v-touch-hold.mouse="refreshImage" />
+    <q-icon v-else class="placeholder-icon fit" name="music_note" />
   </div>
 </template>
 
@@ -91,6 +89,11 @@ export default defineComponent({
       } catch (err) {
         this.image = ''
       }
+    },
+    refreshImage: async function () {
+      const track = this.player.track || { album: '', artist: '' }
+      const res = await axios.get('http://raspberrypi.local:3000/spotify/album/cover/refresh', { params: {album: track.album, artist: track.artist} })
+      this.updateImageUrl = !this.updateImageUrl
     }
   },
   created () {

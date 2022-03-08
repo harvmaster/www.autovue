@@ -41,6 +41,7 @@ import bluetooth from './BluetoothDevices.vue'
 import player from './Player.vue'
 import lyrics from './Lyrics.vue'
 import debug from './Debug.vue'
+import browse from './browse/Browse.vue'
 
 export default defineComponent({
   name: 'SplitChild',
@@ -48,7 +49,8 @@ export default defineComponent({
     bluetooth,
     player,
     lyrics,
-    debug
+    debug,
+    browse
   },
   data () {
     return { 

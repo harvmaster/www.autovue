@@ -74,6 +74,9 @@ export default defineComponent({
       })
       return devices
     },
+    connectedDevice: function () {
+      return this.$store.getters['bluetooth/getDevice']
+    },
     // Setter and getter allow me to use a computed variable for a v-model
     showQR: {
       get () {
@@ -141,10 +144,19 @@ export default defineComponent({
       callback: (msg) => {
         console.log(msg)
         this.bluetoothDevices = { ...this.bluetoothDevices, ...msg }
-        if (msg.connected) this.$store.commit('bluetooth/setDevice', { device: msg })
+        
+        // Handle disconnect
+        const address = Object.keys(msg)[0]
+        if (address == this.connectedDevice.address && !msg.connected) {
+          this.$store.commit('bluetooth/setDevice', { device: {} })
+          this.$store.commit('bluetooth/updatePlayer', {  })
+        }
+        // Handle updates for connected device
+        if (msg[address].connected) this.$store.commit('bluetooth/setDevice', { device: msg[address] })
       }
     })
 
+    // This is legacy and unused now. Should probs remove it
     Socket.addEventListener({
       type: 'bt-disconnected',
       callback: (msg) => {
@@ -152,6 +164,7 @@ export default defineComponent({
         const address = Object.keys(msg)[0]
         this.bluetoothDevices = { ...this.bluetoothDevices, ...msg }
         this.$store.commit('bluetooth/setDevice', { device: {} })
+        this.$store.commit('bluetooth/setPlayer', { player: {} })
       }
     })
   }
