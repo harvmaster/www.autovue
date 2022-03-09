@@ -1,7 +1,18 @@
 <template>
   <div class="hideable bg-grey-9 text-white">
     <div class="row justify-center q-pa-xl">
-      <q-btn label="browse" @click="getRecommended" />
+
+      <q-scroll-view horizontal class="horizontal-playlists">
+        <div class="playlist-image" v-for="playlist of featured" :key="playlist.name">
+          <q-img class="fit" :src="playlist.image" />
+          <p class="playlist-name">{{ playlist.name }}</p>
+        </div>
+      </q-scroll-view>
+
+      <!-- Like Songs Button
+      <div class="col-12">
+        <div src="" />
+      </div> -->
     </div>
   </div>
 </template>
@@ -13,8 +24,17 @@
 .no-margin {
   margin: 0;
 }
-.max-width-30 {
-  max-width: 30em;
+.horizontal-playlist {
+  height: 15em;
+}
+.playlist-item {
+  height: 14em;
+  width: 14em;
+}
+.playlist-name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 </style>
 
@@ -31,6 +51,9 @@ export default defineComponent({
       timeNow: Date.now(),
       lyrics: [
         
+      ],
+      featured: [
+        { name: 'Saved', image: '' }
       ]
     }
   },
