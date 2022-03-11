@@ -51,12 +51,19 @@ export default defineComponent({
 
       return pos || 0
     },
+    lyricTimestamp: function () {
+      const position = this.position
+      const min = Math.floor(position / 20000) * 20000 - 10000 
+      const max = min + 40000 
+      return { min, max }
+    },
     currentLyric: function () {
       const lyrics = this.lyrics
       const position = this.position
-      const currentInd = lyrics.findIndex(lyric => lyric.timestamp > position - 20000)
+      const { min, max } = this.lyricTimestamp
+      const toShow = lyrics.filter(lyric => lyric.timestamp >= min).filter(lyric => lyric.timestamp <= max).filter(lyric => lyric.line != '')
       // console.log(currentInd)
-      const toShow = lyrics.slice(currentInd).filter(line => line.line != '')
+      // const toShow = lyrics.slice(currentInd).filter(line => line.line != '')
 
       // Make probable main line colored?
       // const mainLine = toShow.findIndex(lyric => lyric.timestamp > position - 4000)

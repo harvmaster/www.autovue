@@ -38,7 +38,8 @@ export default defineComponent({
         { label: 'Get Liked Songs', description: '', command: () =>  this.getLikedSongs()},
         { label: 'Get Featured Playlists', description: '', command: '' },
         { label: 'Get Album Cover', description: '', command: '' },
-        { label: 'Get Audio Analysis', description: '', command: () => this.getAnalysis() }
+        { label: 'Get Audio Analysis', description: '', command: () => this.getAnalysis() },
+        { label: 'Get User Playlists', description: '', command: () => this.getPlaylists() }
         // { label: 'Get', description: '', command: '' },
         // { label: '', description: '', command: '' },
         // { label: '', description: '', command: '' },
@@ -59,6 +60,11 @@ export default defineComponent({
     },
     getAnalysis: async function () {
       const res = await axios.get('http://raspberrypi.local:3000/lyrics/analyze/em beihold/numb little bug')
+    },
+    getPlaylists: async function () {
+      const res = await axios.get('http://raspberrypi.local:3000/spotify/playlists')
+
+      console.log(res.data)
     }
   },
   created () {

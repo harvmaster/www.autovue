@@ -67,7 +67,7 @@ export default defineComponent({
   computed: {
     position: function () {
       const { position, lastUpdate } = this.player
-      const pos = this.player.state == 'active' ? position + (this.timeNow - lastUpdate) : position
+      const pos = this.player.status == 'playing' ? position + (this.timeNow - lastUpdate) : position
 
       return pos || 0
     },
@@ -76,7 +76,7 @@ export default defineComponent({
       return this.$store.getters['bluetooth/getPlayer'];
     },
     playPause: function () {
-      return this.player.state == 'active' ? 'pause_circle' : 'play_circle'
+      return this.player.status == 'plaaying' ? 'pause_circle' : 'play_circle'
     },
     imageUrl: function () {
       const forceUpdate = this.updateImageUrl
